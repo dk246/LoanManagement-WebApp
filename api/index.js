@@ -6,9 +6,16 @@ import authRoutes from "./routes/auth.route.js";
 import profileRoutes from "./routes/profile.route.js";
 import loanRoutes from "./routes/loan.route.js";
 import requestRoutes from "./routes/admin.route.js";
+import path from "path";
 
 dotenv.config();
+const __dirname = path.resolve();
 const app = express();
+
+app.use(express.static(path.join(__dirname, "/client/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 app.use(express.json());
 
 mongoose

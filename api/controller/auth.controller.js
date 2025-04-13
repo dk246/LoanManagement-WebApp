@@ -1,8 +1,10 @@
 import jwt from "jsonwebtoken";
-
+import dotenv from "dotenv";
 import bcryptjs from "bcryptjs";
 import User from "../models/user.model.js";
 import Loan from "../models/loan.model.js";
+
+dotenv.config();
 
 export const signup = async (req, res) => {
   const { username, email, fullname, address, phone, password } = req.body;
@@ -43,7 +45,7 @@ export const signin = async (req, res) => {
         .json({ success: false, message: "Invalid password" });
     }
     const loan = await Loan.findOne({ user: validUser._id });
-    const token = jwt.sign({ id: validUser._id }, "ttt");
+    const token = jwt.sign({ id: validUser._id }, process.env.TOKEN);
     const { password: pass, ...userWithoutPass } = validUser._doc;
 
     res
