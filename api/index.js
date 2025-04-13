@@ -6,19 +6,13 @@ import authRoutes from "./routes/auth.route.js";
 import profileRoutes from "./routes/profile.route.js";
 import loanRoutes from "./routes/loan.route.js";
 import requestRoutes from "./routes/admin.route.js";
-import path from "path";
 
 dotenv.config();
-const __dirname = path.resolve();
 const app = express();
-
-app.use(express.static(path.join(__dirname, "/client/dist")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
-});
 app.use(express.json());
 
 mongoose
+
   .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("db connected");
@@ -26,10 +20,10 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+
 app.listen(3000, () => {
   console.log("server listening on port 3000");
 });
-
 // app.get("/", (req, res) => {
 //   res.json({
 //     message: "API is working",
